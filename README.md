@@ -46,4 +46,4 @@ Jamf Connect “Connect” button script trigger
 </dict>
 
 
-Resource: Menu Bar App Preferences - Jamf Connect Documentation | Jamf 
+Resource: https://docs.jamf.com/jamf-connect/2.4.1/documentation/Menu_Bar_App_Preferences.html#ID-00007bec
