@@ -1,7 +1,7 @@
 Jamf Connect Kerberos Renewal Fix
 
 Due to issues we’ve found with Jamf Connects ‘AutoRenew’ feature for Kerberos Tickets, and the poor levels of support from Jamf Tech Support on this issue, we have had to build our own custom solution.
-The problem: Each time Jamf Connect checks-in it generates a new Kerberos Ticket instead of renewing the existing tickets, we instead end up with lots of duplicates. The knock on effect of this is that the ticket associated with AD never gets updated and eventually expires. As a result Identity Awareness on the firewall loses the username associated with the users session and they can lose access to some services.
+The problem: Each time Jamf Connect checks-in it generates a new Kerberos Ticket instead of renewing the existing tickets, we instead end up with lots of duplicates. The knock on effect of this is that the ticket associated with AD never gets updated and eventually expires. As a result Identity Awareness on our firewall loses the username associated with the users session and they can lose access to some services.
 The solution, still utilising Jamf Connect as this holds the authentication information, meaning we won't need users to sign in again. We can use Jamf Connect to generate the ticket but use a LaunchD task to schedule our own script, which will delete any existing Kerberos Tickets and then use Jamf Connect to create a new ticket.
 
 Script in basic form:
