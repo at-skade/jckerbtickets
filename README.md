@@ -6,14 +6,14 @@ The solution, still utilising Jamf Connect as this holds the authentication info
 
 Script in basic form:
 
-'''
+```
 #!/bin/bash
 #Destroy existing kerb tickets
 kdestroy -A
 #Renew Kerberos Ticket Using JamfConnect
 #Password Sync check
 open jamfconnect://networkcheck
-'''
+```
  
 As default Jamf Connect “Checks-In” every 15 minutes, each time it does it generates another ticket. The check-in can be disabled but is needed for the purpose of Jamf Connect, which is to ensure the AD, AAD and local password of the Mac remain in sync.
 
@@ -22,7 +22,7 @@ The solution for this was to disable the automatic check-in by setting the <key>
 We then created a Launch Daemon to trigger this script every 2 hours, allowing us to remove any existing Kerberos Tickets using kdestroy -A before Jamf Connect Generates a new ticket. The results are consistent tickets and no more duplicates.
 LaunchDaemon:
 
-'''
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd%22 >
 <plist version="1.0">
@@ -37,7 +37,7 @@ LaunchDaemon:
 <integer>7200</integer>
 </dict>
 </plist>
-'''
+```
 
 Manually renewing: In the past when we was using NoMad, we could hit the “Renew Tickets” button in the NoMad menu to get new tickets. This was replaced in Jamf Connect with the “Connect” button.
 Unfortunately the “Connect” button has the same issues as above, it doesn’t renew the existing ticket it instead creates a new one.
@@ -45,13 +45,13 @@ To resolve this we have added the following keys, so that the “Connect” butt
 
 Jamf Connect “Connect” button script trigger
 
-'''
+```
 <key>Scripting</key>
 <dict>
 <key>OnAuthSuccess</key>
 <string>/usr/local/at/renewkerb.sh</string>
 </dict>
-'''
+```
 
 
 Resource: https://docs.jamf.com/jamf-connect/2.4.1/documentation/Menu_Bar_App_Preferences.html#ID-00007bec
