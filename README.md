@@ -17,7 +17,7 @@ open jamfconnect://networkcheck
  
 As default Jamf Connect “Checks-In” every 15 minutes, each time it does it generates another ticket. The check-in can be disabled but is needed for the purpose of Jamf Connect, which is to ensure the AD, AAD and local password of the Mac remain in sync.
 
-The solution for this was to disable the automatic check-in by setting the ```<key>NetworkCheck</key>``` to ```0```. Then instead our script we would do the check-in using open jamfconnect://networkcheck. This will both create us our Kerberos Ticket and check the passwords are all in sync.
+The solution for this was to disable the automatic check-in by setting the ```<key>NetworkCheck</key>``` to ```0```. Then instead our script we would do the check-in using open ```jamfconnect://networkcheck``` This will both create us our Kerberos Ticket and check the passwords are all in sync.
 
 We then created a Launch Daemon to trigger this script every 2 hours, allowing us to remove any existing Kerberos Tickets using kdestroy -A before Jamf Connect Generates a new ticket. The results are consistent tickets and no more duplicates.
 LaunchDaemon:
