@@ -19,6 +19,7 @@ The solution for this was to disable the automatic check-in by setting the <key>
 
 We then created a Launch Daemon to trigger this script every 2 hours, allowing us to remove any existing Kerberos Tickets using kdestroy -A before Jamf Connect Generates a new ticket. The results are consistent tickets and no more duplicates.
 LaunchDaemon:
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd%22 >
 <plist version="1.0">
@@ -33,6 +34,7 @@ LaunchDaemon:
 <integer>7200</integer>
 </dict>
 </plist>
+
 Manually renewing: In the past when we was using NoMad, we could hit the “Renew Tickets” button in the NoMad menu to get new tickets. This was replaced in Jamf Connect with the “Connect” button.
 Unfortunately the “Connect” button has the same issues as above, it doesn’t renew the existing ticket it instead creates a new one.
 To resolve this we have added the following keys, so that the “Connect” button triggers our script.
